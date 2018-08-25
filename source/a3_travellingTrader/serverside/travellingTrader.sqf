@@ -78,13 +78,10 @@ clearMagazineCargoGlobal _vehicleObject;
 clearWeaponCargoGlobal _vehicleObject;
 _vehicleObject setVariable ["ExileIsPersistent", false];
 _vehicleObject setFuel 1;
+_vehicleObject setDamage 0;
+_vehicleObject allowDamage false;
 
 diag_log format['[travellingtrader] Vehicle spawned @ %1',_possiblePosStart];
-
-_vehicleObject addEventHandler ["HandleDamage", {
-_amountOfDamage = 0;
-_amountOfDamage
-}];
 
 trader assignasdriver _vehicleObject;
 [trader] orderGetin true;
@@ -124,6 +121,8 @@ while {true} do
 			uiSleep 2.5;
 			_vehicleObject setVehicleLock "LOCKED";
 			_vehicleObject setFuel 0;
+			_vehicleObject setDamage 0;
+			_vehicleObject allowDamage false;
 			trader action ["LightOff", trader];	
 			trader action ["salute", trader];		
 			trader disableAI "MOVE";
@@ -135,12 +134,16 @@ while {true} do
 			[trader] orderGetin true;
 			_vehicleObject setFuel 1;
 			_vehicleObject setVehicleLock "UNLOCKED";
+			_vehicleObject setDamage 0;
+			_vehicleObject allowDamage false;
 			uiSleep 2.5;
 			trader moveInDriver _vehicleObject;
 			trader action ["LightOn", trader];	
 			trader enableAI "MOVE";
 		};
 		_vehicleObject setFuel 1;
+		_vehicleObject setDamage 0;
+		_vehicleObject allowDamage false;
 		uiSleep 5;
 		if(!Alive trader)exitWith {};
 	};	
